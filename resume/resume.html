@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Manoj Kumar - DevOps & Platform Engineer - Résumé</title>
+<meta name="author" content="Manoj Kumar">
+<!-- Source of resume/Manoj_Kumar_Resume.pdf (npm run resume). One column, real text and standard headings so
+     applicant tracking systems parse it. Every fact comes from the approved résumé or the site's data. No phone
+     number or address: this repository is public. -->
+<style>
+  /*FONTS*/
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root { --ink: #0f172a; --body: #1e293b; --muted: #475569; --accent: #0e7490; --rule: #cbd5e1; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { font-family: "Geist", system-ui, sans-serif; font-size: 9.8pt; line-height: 1.46; color: var(--body); }
+  a { color: inherit; text-decoration: none; }
+
+  header { padding-bottom: 3.2mm; border-bottom: 1.6pt solid var(--accent); }
+  h1 { font-size: 23pt; font-weight: 700; letter-spacing: -0.02em; line-height: 1.05; color: var(--ink); }
+  .headline { margin-top: 1.4mm; font-size: 10.6pt; font-weight: 500; color: var(--accent); }
+  .contact { margin-top: 1.6mm; font-size: 8.5pt; color: var(--muted); }
+  .contact .sep { margin: 0 0.6mm; color: #94a3b8; }
+
+  section { margin-top: 5.4mm; }
+  h2 { break-after: avoid; }
+  .job, .skills, .certs, header { break-inside: avoid; }
+  h2 { margin-bottom: 1.6mm; font-family: "Geist Mono", ui-monospace, monospace; font-size: 8.4pt; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
+  .summary { color: var(--body); }
+  .competencies { margin-top: 1.4mm; color: var(--muted); }
+  .competencies b { font-weight: 600; color: var(--ink); }
+
+  .skills { display: grid; grid-template-columns: 39mm 1fr; gap: 0.9mm 3mm; }
+  .skills dt { font-weight: 600; color: var(--ink); }
+  .skills dd { color: var(--body); }
+
+  .job + .job { margin-top: 3.4mm; }
+  .row { display: flex; justify-content: space-between; align-items: baseline; gap: 4mm; }
+  .org { font-size: 10.2pt; font-weight: 600; color: var(--ink); }
+  .role { font-weight: 500; color: var(--ink); }
+  .date { flex: none; font-family: "Geist Mono", ui-monospace, monospace; font-size: 8.2pt; color: var(--muted); }
+  ul { margin-top: 1mm; padding-left: 4mm; }
+  li { margin-top: 0.7mm; padding-left: 0.6mm; }
+  li::marker { color: var(--accent); }
+  .tags { margin-top: 0.8mm; font-size: 8.6pt; color: var(--muted); }
+
+  .certs li { margin-top: 0.4mm; }
+  .certs .date { margin-left: 2mm; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Manoj Kumar</h1>
+  <p class="headline">DevOps &amp; Platform Engineer · Microsoft Azure · Kubernetes (AKS) · Terraform · CI/CD · DevSecOps</p>
+  <p class="contact">Bengaluru, India <span class="sep">·</span> <a href="mailto:manojkumarm0107@gmail.com">manojkumarm0107@gmail.com</a> <span class="sep">·</span> <a href="https://mkthecoder.com">mkthecoder.com</a> <span class="sep">·</span> <a href="https://www.linkedin.com/in/mkthecoder">linkedin.com/in/mkthecoder</a> <span class="sep">·</span> <a href="https://github.com/mkthecoder-ai">github.com/mkthecoder-ai</a></p>
+</header>
+
+<section>
+  <h2>Summary</h2>
+  <p class="summary">DevOps and platform engineer building and running secure, production Azure platforms since 2018. Hands-on across
+    the platform lifecycle: Azure Kubernetes Service (AKS), Terraform infrastructure as code, CI/CD in Azure DevOps and GitLab CI with
+    built-in security gates, Azure API Management, private networking and observability. Certified Azure Administrator Associate
+    (AZ-104) and HashiCorp Terraform Associate; working toward the Certified Kubernetes Administrator (CKA).</p>
+  <p class="competencies"><b>Core areas:</b> Platform engineering · Cloud infrastructure · Kubernetes operations · Infrastructure as Code ·
+    CI/CD automation · DevSecOps · Observability · Production support and RCA · Cost optimisation</p>
+</section>
+
+<section>
+  <h2>Technical skills</h2>
+  <dl class="skills">
+    <dt>Cloud (Azure)</dt><dd>AKS, API Management (APIM), Container Registry (ACR), Key Vault, Service Bus, Storage Accounts, Function Apps, Static Web Apps, Azure Database for PostgreSQL, Azure Cache for Redis, Microsoft Entra ID, Managed Identity</dd>
+    <dt>Infrastructure as Code</dt><dd>Terraform, Azure Verified Modules (AVM), modular multi-state design, remote state, Terraform tests, ARM templates</dd>
+    <dt>CI/CD</dt><dd>Azure DevOps (YAML, multi-stage pipelines), GitLab CI, GitHub Actions, Jenkins, Git, reusable pipeline templates</dd>
+    <dt>Containers</dt><dd>Kubernetes, Docker, Helm, Dapr, Horizontal Pod Autoscaler (HPA)</dd>
+    <dt>Networking</dt><dd>Azure VNet, VNet peering, Private Endpoints, private DNS, NSGs, Azure CNI Overlay, Cilium</dd>
+    <dt>DevSecOps</dt><dd>SAST (SonarCloud), dependency and image scanning (Trivy, JFrog Xray), RBAC, secrets management (Key Vault), distroless images</dd>
+    <dt>Observability</dt><dd>Azure Monitor, Application Insights, Log Analytics, Prometheus, Grafana, Datadog, ELK Stack</dd>
+    <dt>Scripting</dt><dd>Bash, Python, Azure CLI, Linux</dd>
+  </dl>
+</section>
+
+<section>
+  <h2>Professional experience</h2>
+  <div class="job">
+    <div class="row"><span class="org">CNH Industrial (India) Pvt. Ltd. · Bengaluru</span><span class="date">Feb 2023 – Present</span></div>
+    <div class="row"><span class="role">Software Engineer II, DevOps &amp; Platform Engineering</span><span class="date">May 2025 – Present</span></div>
+    <div class="row"><span class="role">Software Engineer I, DevOps Engineering</span><span class="date">Feb 2023 – Apr 2025</span></div>
+    <ul>
+      <li>Build and operate production AKS clusters: provisioning, upgrades, node pools, autoscaling, isolation and hardening.</li>
+      <li>Develop reusable Terraform modules for Azure on Azure Verified Modules (AVM), with a multi-state layout that separates networking, clusters and shared services.</li>
+      <li>Design CI/CD pipelines in Azure DevOps and GitLab CI with reusable templates and enforced security gates for code, dependency and container image scanning.</li>
+      <li>Manage Azure API Management (APIM): policies, backends, API lifecycle and automated OpenAPI publishing through pipelines.</li>
+      <li>Implement private networking with VNets, peering, private endpoints and private DNS for platform services.</li>
+      <li>Run observability with Azure Monitor, Prometheus, Grafana and Datadog; support production incidents and root-cause analysis.</li>
+    </ul>
+  </div>
+  <div class="job">
+    <div class="row"><span class="org">Unified Softech · DevOps Engineer</span><span class="date">Jan 2020 – Oct 2022</span></div>
+    <ul>
+      <li>Designed and deployed Kubernetes-based platforms on Azure for production workloads across client projects.</li>
+      <li>Migrated legacy deployments to containerised architectures with Docker and Kubernetes.</li>
+      <li>Implemented infrastructure as code with Terraform for repeatable environment provisioning.</li>
+      <li>Built CI/CD pipelines that moved release cycles from weekly to daily.</li>
+      <li>Introduced observability with Prometheus, Grafana and ELK; cut cloud costs by 20–30% through right-sizing.</li>
+    </ul>
+  </div>
+  <div class="job">
+    <div class="row"><span class="org">Cubespace Technologies · DevOps Engineer</span><span class="date">Feb 2018 – Sep 2019</span></div>
+    <ul>
+      <li>Managed Azure infrastructure, including virtual machines, networking and storage, for client and internal projects.</li>
+      <li>Introduced CI/CD automation pipelines, reducing manual release effort by about 50%.</li>
+      <li>Containerised legacy applications, supported Kubernetes deployments, and implemented monitoring and logging.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Project</h2>
+  <div class="job">
+    <div class="row"><span class="org">mkthecoder.com · Portfolio platform, built and run end to end</span><span class="date">2026</span></div>
+    <ul>
+      <li>Static Next.js site on Azure Static Web Apps (Free tier), provisioned with Terraform: Entra ID-only remote state, budgets with spend and forecast alerts, custom domains with managed certificates.</li>
+      <li>CI quality gates on every change: lint, type checks, unit and browser tests, WCAG 2.2 AA accessibility and contrast checks, JavaScript budget and link checks; Terraform tests with mocked providers.</li>
+      <li>Protected main branch as code: required checks, code-owner review, squash-only merges, secret scanning with push protection, Dependabot.</li>
+    </ul>
+    <p class="tags">Terraform · Azure Static Web Apps · GitHub Actions · Next.js · Playwright · github.com/mkthecoder-ai/portfolio</p>
+  </div>
+</section>
+
+<section>
+  <h2>Certifications</h2>
+  <ul class="certs">
+    <li>Microsoft Certified: Azure Administrator Associate (AZ-104)<span class="date">2026</span></li>
+    <li>HashiCorp Certified: Terraform Associate (003)<span class="date">2025</span></li>
+    <li>Microsoft Certified: Azure Fundamentals (AZ-900)<span class="date">2023</span></li>
+    <li>In progress: Certified Kubernetes Administrator (CKA)</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Education</h2>
+  <div class="row"><span><span class="role">B.E., Electronics &amp; Communication</span> · Don Bosco Institute of Technology, Bengaluru</span><span class="date">Aug 2014 – Jun 2018</span></div>
+</section>
+</body>
+</html>

@@ -31,7 +31,8 @@
     "hero-art": "node scripts/build-hero-art.mjs",
     "sky-art": "node scripts/build-sky-art.mjs",
     "avatar": "node scripts/build-avatar.mjs",
-    "repo-policy": "node scripts/apply-repo-policy.mjs"
+    "repo-policy": "node scripts/apply-repo-policy.mjs",
+    "resume": "node scripts/build-resume.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
