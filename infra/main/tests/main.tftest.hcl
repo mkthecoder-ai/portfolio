@@ -25,7 +25,7 @@ mock_provider "azurerm" {
 
 variables {
   subscription_id = "00000000-0000-0000-0000-000000000000"
-  alert_email     = "alerts@example.com"
+  alert_emails    = ["alerts@example.com", "owner@example.com"]
 }
 
 run "first_apply_has_no_custom_domains_and_only_spf_in_txt" {
@@ -87,12 +87,16 @@ run "anti_spoofing_records" {
 
 run "resource_group_budget" {
   assert {
-    condition     = azurerm_consumption_budget_resource_group.portfolio.amount == 500
-    error_message = "Portfolio budget is 500 a month."
+    condition     = azurerm_consumption_budget_resource_group.portfolio.amount == 100
+    error_message = "Portfolio budget is 100 a month."
   }
   assert {
-    condition     = toset([for n in azurerm_consumption_budget_resource_group.portfolio.notification : n.threshold]) == toset([80, 100])
-    error_message = "Alerts at 80% and 100%."
+    condition     = toset([for n in azurerm_consumption_budget_resource_group.portfolio.notification : "${n.threshold_type}:${n.threshold}"]) == toset(["Actual:50", "Actual:80", "Actual:100", "Forecasted:100"])
+    error_message = "Alerts at 50%, 80% and 100% of actual spend, and when the forecast reaches 100%."
+  }
+  assert {
+    condition     = alltrue([for n in azurerm_consumption_budget_resource_group.portfolio.notification : toset(n.contact_emails) == toset(["alerts@example.com", "owner@example.com"])])
+    error_message = "Every alert goes to every address in alert_emails."
   }
 }
 

@@ -24,18 +24,15 @@ resource "azurerm_consumption_budget_resource_group" "portfolio" {
     start_date = var.budget_start_date
   }
 
-  notification {
-    enabled        = true
-    threshold      = 80
-    operator       = "GreaterThanOrEqualTo"
-    contact_emails = [var.alert_email]
-  }
-
-  notification {
-    enabled        = true
-    threshold      = 100
-    operator       = "GreaterThanOrEqualTo"
-    contact_emails = [var.alert_email]
+  dynamic "notification" {
+    for_each = var.budget_alerts
+    content {
+      enabled        = true
+      threshold      = notification.value.threshold
+      threshold_type = notification.value.threshold_type
+      operator       = "GreaterThanOrEqualTo"
+      contact_emails = var.alert_emails
+    }
   }
 
   lifecycle {
