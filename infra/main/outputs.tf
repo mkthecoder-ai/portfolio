@@ -1,11 +1,17 @@
-output "name_servers" {
-  description = "Enter these four in GoDaddy: Nameservers > I'll use my own nameservers."
-  value       = azurerm_dns_zone.site.name_servers
-}
-
 output "default_host_name" {
   description = "The site's *.azurestaticapps.net address (works before the custom domain)."
   value       = azurerm_static_web_app.site.default_host_name
+}
+
+output "godaddy_records" {
+  description = <<-EOT
+    Records to add in GoDaddy DNS. Also add: A @ -> the app's stableInboundIP (az rest command in infra/README.md),
+    and remove GoDaddy's default parking A record and www CNAME first.
+  EOT
+  value = concat(
+    [{ type = "CNAME", name = "www", value = azurerm_static_web_app.site.default_host_name }],
+    local.apex_validation_token == null ? [] : [{ type = "TXT", name = "@", value = local.apex_validation_token }],
+  )
 }
 
 output "deployment_token" {

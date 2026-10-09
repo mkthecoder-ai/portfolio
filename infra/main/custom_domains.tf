@@ -1,4 +1,5 @@
-# Created only in the second apply, after the GoDaddy nameservers point at Azure DNS.
+# Created only in the second apply. DNS stays at GoDaddy (decision 2026-10-09: no Azure DNS zone, saves its
+# monthly charge); the records to add there are in output.godaddy_records.
 
 resource "azurerm_static_web_app_custom_domain" "apex" {
   count             = var.enable_custom_domains ? 1 : 0
@@ -23,5 +24,8 @@ resource "azurerm_static_web_app_custom_domain" "www" {
   static_web_app_id = azurerm_static_web_app.site.id
   domain_name       = "www.${var.domain}"
   validation_type   = "cname-delegation"
-  depends_on        = [azurerm_dns_cname_record.www]
+}
+
+locals {
+  apex_validation_token = var.enable_custom_domains ? terraform_data.apex_validation_token[0].output : null
 }

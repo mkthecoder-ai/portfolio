@@ -46,15 +46,9 @@ variable "swa_location" {
 }
 
 variable "enable_custom_domains" {
-  description = "Second apply only: set true after the GoDaddy nameservers point at Azure DNS and have propagated."
+  description = "Second apply only: set true after the www CNAME is live at GoDaddy (www validation needs it)."
   type        = bool
   default     = false
-}
-
-variable "enable_null_mx" {
-  description = "Publish a null MX (0 .). Set false only if Azure DNS rejects '.' as the exchange."
-  type        = bool
-  default     = true
 }
 
 variable "rg_budget_amount" {

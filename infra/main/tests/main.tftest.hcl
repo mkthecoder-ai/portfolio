@@ -11,11 +11,6 @@ mock_provider "azurerm" {
       api_key           = "mock-deployment-token"
     }
   }
-  mock_resource "azurerm_dns_zone" {
-    defaults = {
-      name_servers = ["ns1-01.azure-dns.com.", "ns2-01.azure-dns.net.", "ns3-01.azure-dns.org.", "ns4-01.azure-dns.info."]
-    }
-  }
   mock_resource "azurerm_static_web_app_custom_domain" {
     defaults = {
       validation_token = "mock-validation-token"
@@ -28,22 +23,22 @@ variables {
   alert_emails    = ["alerts@example.com", "owner@example.com"]
 }
 
-run "first_apply_has_no_custom_domains_and_only_spf_in_txt" {
+run "first_apply_has_no_custom_domains_and_no_azure_dns" {
   assert {
     condition     = length(azurerm_static_web_app_custom_domain.apex) == 0 && length(azurerm_static_web_app_custom_domain.www) == 0
     error_message = "Custom domains must wait for the second apply."
   }
   assert {
-    condition     = toset([for r in azurerm_dns_txt_record.apex.record : r.value]) == toset(["v=spf1 -all"])
-    error_message = "Before custom domains, the apex TXT holds only SPF."
-  }
-  assert {
     condition     = output.apex_validation_token == null
     error_message = "No validation token yet."
   }
+  assert {
+    condition     = output.godaddy_records == [{ type = "CNAME", name = "www", value = "calm-tree-0a1b2c3d4.6.azurestaticapps.net" }]
+    error_message = "Before custom domains, GoDaddy only needs the www CNAME (DNS stays at GoDaddy; no Azure DNS zone)."
+  }
 }
 
-run "site_and_dns_basics" {
+run "site_basics" {
   assert {
     condition     = azurerm_static_web_app.site.sku_tier == "Free" && azurerm_static_web_app.site.sku_size == "Free"
     error_message = "Static Web App must be Free."
@@ -53,35 +48,8 @@ run "site_and_dns_basics" {
     error_message = "Regions are fixed by the spec."
   }
   assert {
-    condition     = azurerm_dns_zone.site.name == "mkthecoder.com"
-    error_message = "Zone is mkthecoder.com."
-  }
-  assert {
-    condition     = azurerm_dns_a_record.apex.name == "@" && azurerm_dns_a_record.apex.target_resource_id == azurerm_static_web_app.site.id
-    error_message = "Apex is an alias A record to the Static Web App."
-  }
-  assert {
-    condition     = azurerm_dns_cname_record.www.record == "calm-tree-0a1b2c3d4.6.azurestaticapps.net"
-    error_message = "www points at the default hostname."
-  }
-  assert {
-    condition     = length(output.name_servers) == 4
-    error_message = "Four name servers for GoDaddy."
-  }
-  assert {
     condition     = azurerm_resource_group.portfolio.tags["project"] == "portfolio" && azurerm_static_web_app.site.tags["managed-by"] == "terraform"
     error_message = "Standard tags missing."
-  }
-}
-
-run "anti_spoofing_records" {
-  assert {
-    condition     = azurerm_dns_txt_record.dmarc.name == "_dmarc" && one([for r in azurerm_dns_txt_record.dmarc.record : r.value]) == "v=DMARC1; p=reject;"
-    error_message = "DMARC must reject."
-  }
-  assert {
-    condition     = one([for r in azurerm_dns_mx_record.null_mx[0].record : r.exchange]) == "." && one([for r in azurerm_dns_mx_record.null_mx[0].record : r.preference]) == "0"
-    error_message = "Null MX is 0 . (RFC 7505)."
   }
 }
 
@@ -100,7 +68,7 @@ run "resource_group_budget" {
   }
 }
 
-run "second_apply_adds_custom_domains_and_keeps_spf" {
+run "second_apply_binds_both_domains_and_lists_the_txt_token" {
   variables {
     enable_custom_domains = true
   }
@@ -113,26 +81,12 @@ run "second_apply_adds_custom_domains_and_keeps_spf" {
     error_message = "www uses CNAME delegation."
   }
   assert {
-    condition     = toset([for r in azurerm_dns_txt_record.apex.record : r.value]) == toset(["v=spf1 -all", "mock-validation-token"])
-    error_message = "Apex TXT must hold SPF and the validation token together."
-  }
-  assert {
     condition     = output.apex_validation_token == "mock-validation-token"
-    error_message = "Token is exposed for troubleshooting."
-  }
-}
-
-run "null_mx_can_be_turned_off" {
-  variables {
-    enable_null_mx = false
+    error_message = "Token is exposed for the GoDaddy TXT record."
   }
   assert {
-    condition     = length(azurerm_dns_mx_record.null_mx) == 0
-    error_message = "enable_null_mx = false removes only the MX record."
-  }
-  assert {
-    condition     = one([for r in azurerm_dns_txt_record.dmarc.record : r.value]) == "v=DMARC1; p=reject;"
-    error_message = "DMARC stays."
+    condition     = contains(output.godaddy_records, { type = "TXT", name = "@", value = "mock-validation-token" })
+    error_message = "GoDaddy records include the apex TXT validation token."
   }
 }
 
