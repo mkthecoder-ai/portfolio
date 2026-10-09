@@ -1,0 +1,44 @@
+{
+  "name": "mkthecoder-portfolio",
+  "private": true,
+  "workspaces": [
+    "site"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "npm run dev -w site",
+    "build": "npm run build -w site",
+    "lint": "npm run lint -w site",
+    "typecheck": "npm run typecheck -w site",
+    "test": "npm run test -w site && node --test \"scripts/**/*.test.mjs\"",
+    "e2e": "npm run e2e -w site",
+    "serve": "node scripts/serve-out.mjs site/out 3000",
+    "check:budget": "node scripts/js-budget.mjs site/out",
+    "logos": "node scripts/copy-logos.mjs",
+    "check:content": "node scripts/check-content.mjs site/out",
+    "check:launch": "node scripts/check-content.mjs site/out --launch",
+    "icons": "node scripts/build-icons.mjs",
+    "verify": "npm run lint && npm run typecheck && npm test && npm run check:contrast && npm run build && npm run check:content && npm run check:budget && node scripts/check-links.mjs site/out/index.html --offline && npm run e2e",
+    "badges": "node scripts/build-badges.mjs",
+    "og": "node scripts/build-og.mjs",
+    "check:links": "node scripts/check-links.mjs site/out/index.html",
+    "check:contrast": "node scripts/contrast-report.mjs",
+    "review": "node scripts/review.mjs",
+    "lighthouse": "node scripts/lighthouse.mjs",
+    "hero-static": "node scripts/build-hero-static.mjs",
+    "hero-art": "node scripts/build-hero-art.mjs",
+    "sky-art": "node scripts/build-sky-art.mjs",
+    "avatar": "node scripts/build-avatar.mjs",
+    "repo-policy": "node scripts/apply-repo-policy.mjs"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.64.0",
+    "devicon": "^2.17.0",
+    "opentype.js": "^2.0.0",
+    "sharp": "^0.35.5",
+    "simple-icons": "^16.34.0"
+  }
+}

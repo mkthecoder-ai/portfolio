@@ -1,0 +1,6 @@
+{
+  "baselineKb": 132,
+  "budgetKb": 157,
+  "method": "gzip of every distinct <script src> on index.html, excluding nomodule polyfills; baseline = a page with no client components",
+  "measuredOn": "2026-10-08"
+}

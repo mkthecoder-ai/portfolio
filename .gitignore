@@ -1,0 +1,62 @@
+# Claude Code, personal
+CLAUDE.local.md
+# Working notes kept local (decision 2026-10-09: not published)
+CLAUDE.md
+docs/superpowers/
+.claude/settings.local.json
+
+# Personal data: never commit the résumé or raw source media
+resume*.pdf
+résumé*.pdf
+*resume*.pdf
+inputs/
+*.docx
+
+# Secrets and credentials
+.env
+.env.*
+!.env.example
+*.secret
+*.secrets
+*cred*.json
+*.pem
+*.key
+*.pfx
+*.tfvars
+!*.tfvars.example
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
+npm-debug.log*
+
+# Terraform
+.terraform/
+*.tfstate*
+*.tfplan
+
+# OS / editor
+.DS_Store
+
+# Build, test and review output
+site/test-results/
+site/playwright-report/
+site/blob-report/
+review/
+
+# Résumés in any casing are private by default...
+*[Rr]esume*.pdf
+# ...except the one public copy served at /Manoj_Kumar_M_Resume.pdf
+!site/public/Manoj_Kumar_M_Resume.pdf
+
+# Loose images in the repo root (personal photos, drafts) are never committed
+/*.png
+/*.jpg
+/*.jpeg
+/*.webp
+
+# Screen recordings shared for review stay local
+*.webm
