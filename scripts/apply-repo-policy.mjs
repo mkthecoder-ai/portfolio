@@ -26,7 +26,9 @@ if (isPublic) {
   gh(["-X", "PATCH", `repos/${REPO}`, "--input", "-"], JSON.stringify({ security_and_analysis: {
     secret_scanning: { status: "enabled" }, secret_scanning_push_protection: { status: "enabled" } } }));
   gh(["-X", "PUT", `repos/${REPO}/private-vulnerability-reporting`]);
-  console.log("public: secret scanning + push protection and private vulnerability reporting on");
+  // Workflows from any outside contributor's PR wait for the owner's approval before they run.
+  gh(["-X", "PUT", `repos/${REPO}/actions/permissions/fork-pr-contributor-approval`, "-f", "approval_policy=all_external_contributors"]);
+  console.log("public: secret scanning + push protection, private vulnerability reporting, outside-contributor workflows need approval");
 }
 
 let existing;
