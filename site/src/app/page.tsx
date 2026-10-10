@@ -3,7 +3,6 @@ import { Header } from "@/components/Header";
 import { About } from "@/components/sections/About";
 import { Certifications } from "@/components/sections/Certifications";
 import { Contact } from "@/components/sections/Contact";
-import { Experience } from "@/components/sections/Experience";
 import { DuskHero } from "@/components/hero/DuskHero";
 import { Play } from "@/components/sections/Play";
 import { Services } from "@/components/sections/Services";
@@ -25,7 +24,6 @@ export default function Home() {
         <Play />
         <Services />
         <Stack />
-        <Experience />
         <Certifications />
         <Contact />
       </main>

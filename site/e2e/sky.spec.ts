@@ -7,7 +7,7 @@ import { test, expect } from "./fixtures";
 test("every part of the page belongs to one of the six stages, in order", async ({ page }) => {
   await page.goto("/");
   const stages = await page.locator("[data-stage]").evaluateAll((els) => els.map((e) => `${e.id || e.tagName.toLowerCase()}:${(e as HTMLElement).dataset.stage}`));
-  expect(stages).toEqual(["home:1", "work:2", "about:3", "play:3", "services:4", "stack:4", "experience:5", "certifications:5", "contact:6", "footer:6"]);
+  expect(stages).toEqual(["home:1", "work:2", "about:3", "play:3", "services:4", "stack:4", "certifications:5", "contact:6", "footer:6"]);
 });
 
 test("without the live sky, each stage has its own painted gradient (no plain black)", async ({ page }) => {
@@ -34,7 +34,7 @@ test.describe("live sky", () => {
     expect(Date.now() - t0, "the sky engine arrives as its own lazy chunk").toBeGreaterThanOrEqual(HOLD);
     await expect(page.locator("html")).toHaveAttribute("data-sky", "live");
 
-    for (const [id, stage] of [["work", 2], ["about", 3], ["services", 4], ["experience", 5], ["contact", 6]] as const) {
+    for (const [id, stage] of [["work", 2], ["about", 3], ["services", 4], ["certifications", 5], ["contact", 6]] as const) {
       await page.evaluate((i) => document.getElementById(i)!.scrollIntoView({ block: "start", behavior: "instant" }), id);
       await expect.poll(() => page.evaluate(() => Math.round(window.__sky!.stage)), { message: id }).toBe(stage);
     }

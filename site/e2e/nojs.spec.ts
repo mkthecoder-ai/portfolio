@@ -5,7 +5,7 @@ test.use({ javaScriptEnabled: false });
 test("every section is readable without JavaScript", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator("h1").first()).toBeVisible();
-  for (const id of ["work", "about", "services", "stack", "experience", "certifications", "contact"]) {
+  for (const id of ["work", "about", "services", "stack", "certifications", "contact"]) {
     const head = page.locator(`#${id} .section-head`);
     await head.scrollIntoViewIfNeeded();
     expect(await head.evaluate((el) => getComputedStyle(el).opacity), `#${id}`).toBe("1");

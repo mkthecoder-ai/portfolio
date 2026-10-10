@@ -1,12 +1,13 @@
 #!/usr/bin/env node
-// Builds resume/Manoj_Kumar_Resume.pdf (A4, at most two pages, jobs never split across pages) from resume/resume.html with Geist embedded, so the PDF
+// Builds resume/Manoj_Kumar_Resume.pdf and the site's copy, site/public/Manoj_Kumar_M_Resume.pdf (A4, at most two pages, blocks never split
+// across pages), from resume/resume.html with Geist embedded, so the PDF
 // looks the same everywhere and its text stays selectable for applicant tracking systems.
 // Fails if the résumé runs past two pages or contains anything that looks like a phone number (this
 // repository is public).
 import { chromium } from "playwright";
 import { readFile, writeFile } from "node:fs/promises";
 
-const OUT = "resume/Manoj_Kumar_Resume.pdf";
+const OUT = ["resume/Manoj_Kumar_Resume.pdf", "site/public/Manoj_Kumar_M_Resume.pdf"];
 const font = async (family, weight, file) =>
   `@font-face { font-family: "${family}"; font-weight: ${weight}; src: url(data:font/woff2;base64,${(await readFile(file)).toString("base64")}) format("woff2"); }`;
 const sans = "node_modules/geist/dist/fonts/geist-sans/";
@@ -31,8 +32,8 @@ try {
     footerTemplate: footer, margin: { top: "13mm", bottom: "15mm", left: "15mm", right: "15mm" } });
   const pages = (pdf.toString("latin1").match(/\/Type\s*\/Page[^s]/g) ?? []).length;
   if (pages < 1 || pages > 2) throw new Error(`resume: ${pages} pages; keep it to two A4 pages`);
-  await writeFile(OUT, pdf);
-  console.log(`resume: wrote ${OUT} (${(pdf.length / 1024).toFixed(0)} kB, ${pages} pages)`);
+  for (const out of OUT) await writeFile(out, pdf);
+  console.log(`resume: wrote ${OUT.join(" and ")} (${(pdf.length / 1024).toFixed(0)} kB, ${pages} pages)`);
 } finally {
   await browser.close();
 }
