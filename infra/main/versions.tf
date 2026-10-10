@@ -21,5 +21,5 @@ provider "azurerm" {
   features {}
   subscription_id                = var.subscription_id
   storage_use_azuread            = true
-  resource_providers_to_register = ["Microsoft.Web", "Microsoft.Network", "Microsoft.Consumption"]
+  resource_providers_to_register = ["Microsoft.Web", "Microsoft.Consumption"]
 }

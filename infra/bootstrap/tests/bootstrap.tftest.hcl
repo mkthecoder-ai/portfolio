@@ -16,7 +16,7 @@ mock_provider "azurerm" {
 
 variables {
   subscription_id = "00000000-0000-0000-0000-000000000000"
-  alert_email     = "alerts@example.com"
+  alert_emails    = ["alerts@example.com", "owner@example.com"]
 }
 
 run "state_storage_is_azure_ad_only_and_private" {
@@ -52,20 +52,20 @@ run "state_storage_is_azure_ad_only_and_private" {
   }
 }
 
-run "subscription_budget_alerts_at_80_and_100" {
+run "subscription_budget_100_with_early_alerts" {
   command = plan
 
   assert {
-    condition     = azurerm_consumption_budget_subscription.monthly.amount == 1000
-    error_message = "Subscription budget is 1000 a month."
+    condition     = azurerm_consumption_budget_subscription.monthly.amount == 100
+    error_message = "Subscription budget is 100 a month."
   }
   assert {
-    condition     = toset([for n in azurerm_consumption_budget_subscription.monthly.notification : n.threshold]) == toset([80, 100])
-    error_message = "Alerts at 80% and 100%."
+    condition     = toset([for n in azurerm_consumption_budget_subscription.monthly.notification : "${n.threshold_type}:${n.threshold}"]) == toset(["Actual:50", "Actual:80", "Actual:100", "Forecasted:100"])
+    error_message = "Alerts at 50%, 80% and 100% of actual spend, and when the forecast reaches 100%."
   }
   assert {
-    condition     = alltrue([for n in azurerm_consumption_budget_subscription.monthly.notification : contains(n.contact_emails, "alerts@example.com")])
-    error_message = "Every alert goes to alert_email."
+    condition     = alltrue([for n in azurerm_consumption_budget_subscription.monthly.notification : toset(n.contact_emails) == toset(["alerts@example.com", "owner@example.com"])])
+    error_message = "Every alert goes to every address in alert_emails."
   }
 }
 

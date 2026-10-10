@@ -7,13 +7,24 @@ variable "subscription_id" {
   }
 }
 
-variable "alert_email" {
-  description = "Where budget alerts go. Set in terraform.tfvars."
-  type        = string
+variable "alert_emails" {
+  description = "Where budget alerts go (every alert goes to every address). Set in terraform.tfvars."
+  type        = list(string)
   validation {
-    condition     = can(regex("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$", var.alert_email))
-    error_message = "alert_email must be an email address."
+    condition     = length(var.alert_emails) > 0 && alltrue([for e in var.alert_emails : can(regex("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$", e))])
+    error_message = "alert_emails must be a non-empty list of email addresses."
   }
+}
+
+variable "budget_alerts" {
+  description = "Budget notifications: percentage of the budget and whether it is actual or forecast spend."
+  type        = list(object({ threshold = number, threshold_type = string }))
+  default = [
+    { threshold = 50, threshold_type = "Actual" },
+    { threshold = 80, threshold_type = "Actual" },
+    { threshold = 100, threshold_type = "Actual" },
+    { threshold = 100, threshold_type = "Forecasted" },
+  ]
 }
 
 variable "domain" {
@@ -35,21 +46,15 @@ variable "swa_location" {
 }
 
 variable "enable_custom_domains" {
-  description = "Second apply only: set true after the GoDaddy nameservers point at Azure DNS and have propagated."
+  description = "Second apply only: set true after the www CNAME is live at GoDaddy (www validation needs it)."
   type        = bool
   default     = false
 }
 
-variable "enable_null_mx" {
-  description = "Publish a null MX (0 .). Set false only if Azure DNS rejects '.' as the exchange."
-  type        = bool
-  default     = true
-}
-
 variable "rg_budget_amount" {
-  description = "Monthly budget for the portfolio resource group, in the billing currency."
+  description = "Monthly budget for the portfolio resource group, in the billing currency (INR)."
   type        = number
-  default     = 500
+  default     = 100
 }
 
 variable "budget_start_date" {
