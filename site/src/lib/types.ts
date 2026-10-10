@@ -14,8 +14,6 @@ export interface SectionMeta { id: string; index: string; label: string; title: 
 export interface Capability { title: string; description: string; tags: string[]; logos: LogoSlug[] }
 export interface StackItem { name: string; icon: IconRef; aliases?: string[] }
 export interface StackGroup { id: string; title: string; items: StackItem[] }
-export interface Role { title: string; period: string }
-export interface TimelineStop { id: string; kind: "education" | "work"; period: string; heading: string; org: string; roles?: Role[]; bullets: string[] }
 export type DiagramKind = "terraform" | "pipeline" | "cni" | "apim" | "aura";
 export interface Constraints { status: "DRAFT" | "APPROVED"; items: string[] }
 export interface WorkItem {
@@ -33,6 +31,5 @@ export interface Certification {
   /** Small official earner badge, self-hosted under /badges. */
   image: { src: string; alt: string };
 }
-export interface Stat { prefix?: string; value: string; caption: string }
 export interface ContactContent { heading: string; body: string }
 export interface SeoContent { title: string; description: string; ogTitle: string; ogDescription: string; knowsAbout: string[] }

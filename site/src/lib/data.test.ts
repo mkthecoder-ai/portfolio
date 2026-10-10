@@ -1,16 +1,15 @@
 import { describe, it, expect } from "vitest";
 import {
   ABOUT, ALL_WORK, AURA_CLEANROOM_CONFIRMED, CAPABILITIES, CERTIFICATIONS, CONTACT, IN_PROGRESS, NAV,
-  NON_STACK_TERMS, PROFILE, SECTIONS, SECTION_ORDER, SEO, STACK_GROUPS, STATS, TIMELINE, WORK,
+  NON_STACK_TERMS, PROFILE, SECTIONS, SECTION_ORDER, SEO, STACK_GROUPS, WORK,
 } from "./data";
 import { oneLiner, stackItemFor, unknownWorkTerms, usedIn, yearEarned } from "./derive";
 import { LINE_ICONS } from "./line-icons";
 import { LOGOS } from "./logos.generated";
 
-const visible = JSON.stringify({ PROFILE, ABOUT, CAPABILITIES, STACK_GROUPS, TIMELINE, WORK, CERTIFICATIONS, IN_PROGRESS, STATS, CONTACT, SEO, SECTIONS });
+const visible = JSON.stringify({ PROFILE, ABOUT, CAPABILITIES, STACK_GROUPS, WORK, CERTIFICATIONS, IN_PROGRESS, CONTACT, SEO, SECTIONS });
 const all = JSON.stringify({ visible, ALL_WORK });
 const item = (name: string) => STACK_GROUPS.flatMap((g) => g.items).find((i) => i.name === name)!;
-const EMPLOYERS = /CNH|Unified Softech|Cubespace/i;
 
 describe("copy rules", () => {
   it("never states a number of years", () => expect(all).not.toMatch(/\b\d+\s*\+?\s*(years?|yrs?)\b/i));
@@ -42,17 +41,10 @@ describe("structure", () => {
   it("navigates to Work, About and Play (spec 5.0; Resume is the button)", () => {
     expect(NAV.map((n) => n.label)).toEqual(["Work", "About", "Play"]);
   });
-  it("labels all eight home sections in order (spec 5.0 adds Play)", () => {
+  it("labels all seven home sections in order (Experience removed 2026-10-10)", () => {
     expect(SECTION_ORDER.map((id) => `${SECTIONS[id].index} / ${SECTIONS[id].label}`)).toEqual([
-      "01 / Work", "02 / About", "03 / Play", "04 / Services", "05 / Stack", "06 / Experience", "07 / Certifications", "08 / Contact",
+      "01 / Work", "02 / About", "03 / Play", "04 / Services", "05 / Stack", "06 / Certifications", "07 / Contact",
     ]);
-  });
-});
-
-describe("stats", () => {
-  it("shows exactly 'Since 2018' and '3 certifications', consistent with the data", () => {
-    expect(STATS.map((s) => `${s.prefix ? `${s.prefix} ` : ""}${s.value} ${s.caption}`)).toEqual(["Since 2018 Building on Azure", "3 Certifications"]);
-    expect(Number(STATS[1].value)).toBe(CERTIFICATIONS.length);
   });
 });
 
@@ -68,17 +60,12 @@ describe("work", () => {
       expect(oneLiner(w).split(/(?<=[.!?])\s+/).length, w.id).toBe(1);
     }
   });
-  it("drafts 2-4 generic constraints per pattern, all still DRAFT, with no employer facts", () => {
+  it("drafts 2-4 generic constraints per pattern, all still DRAFT", () => {
     for (const w of ALL_WORK.filter((x) => x.id !== "aura")) {
       expect(w.constraints?.status, w.id).toBe("DRAFT");
       expect(w.constraints!.items.length, w.id).toBeGreaterThanOrEqual(2);
       expect(w.constraints!.items.length, w.id).toBeLessThanOrEqual(4);
-      for (const c of w.constraints!.items) expect(c, w.id).not.toMatch(EMPLOYERS);
     }
-  });
-  it("names employers only in the Experience timeline", () => {
-    const outsideExperience = JSON.stringify({ PROFILE, ABOUT, CAPABILITIES, STACK_GROUPS, ALL_WORK, CERTIFICATIONS, STATS, CONTACT, SEO });
-    expect(outsideExperience).not.toMatch(EMPLOYERS);
   });
 });
 
@@ -112,25 +99,6 @@ describe("services (spec 5.3)", () => {
         expect(named, `${c.title} names a tool with the ${slug} mark`).toContain(slug);
       }
     }
-  });
-});
-
-describe("experience", () => {
-  it("describes CNH in the public résumé's capability wording, with no internal projects or migrations", () => {
-    const cnh = TIMELINE.find((s) => s.id === "cnh")!.bullets;
-    expect(cnh).toEqual([
-      "Build and operate production AKS clusters: provisioning, upgrades, node pools, autoscaling, isolation and hardening.",
-      "Develop reusable Terraform modules for Azure using Azure Verified Modules (AVM), with a multi-state layout that separates networking, clusters and shared services.",
-      "Design CI/CD pipelines in Azure DevOps and GitLab CI with reusable templates and enforced security gates for code, dependency and container image scanning.",
-      "Manage Azure API Management (APIM): policies, backends, API lifecycle and automated OpenAPI publishing through pipelines.",
-      "Implement private networking with VNets, peering, private endpoints and private DNS for platform services.",
-      "Run observability with Azure Monitor, Prometheus, Grafana and Datadog.",
-    ]);
-    expect(cnh.join(" ")).not.toMatch(/\bmove\b|migrat|incident|\d+\s*%/i);
-  });
-  it("runs oldest first and ends at CNH with both titles", () => {
-    expect(TIMELINE.map((s) => s.org)).toEqual(["Don Bosco Institute of Technology, Bengaluru", "Cubespace Technologies", "Unified Softech", "CNH Industrial"]);
-    expect(TIMELINE[3].roles?.map((r) => r.title)).toEqual(["Software Engineer II, DevOps & Platform Engineering", "Software Engineer I, DevOps Engineering"]);
   });
 });
 
