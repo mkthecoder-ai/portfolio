@@ -165,30 +165,6 @@
   .chip-icon > svg { stroke-width: 1.75; }
 }
 
-/* Experience (A11): two stat cards, static timeline. */
-@layer components {
-  .stats { display: grid; gap: var(--gutter); grid-template-columns: 1fr; }
-  @media (min-width: 640px) { .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 66%; } }
-  .stat { padding: var(--space-6); }
-  .stat-value { font-size: var(--fs-h2); line-height: 1; letter-spacing: -0.02em; }
-  .stat-prefix { color: var(--text); }
-  .stat-number { color: var(--accent); }
-  .stat-caption { margin-top: var(--space-3); }
-  .timeline { position: relative; margin-top: var(--space-8); max-width: 880px; }
-  .timeline::before { content: ""; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 1px; background: var(--hairline); }
-  .tl-stop { position: relative; padding-left: var(--space-7); padding-bottom: var(--space-7); }
-  .tl-stop:last-child { padding-bottom: 0; }
-  .tl-dot { position: absolute; left: 0; top: 4px; width: 15px; height: 15px; border: 1px solid var(--border-control); border-radius: 50%; background: var(--bg); }
-  .tl-org { margin-top: var(--space-2); }
-  .tl-role { margin-top: var(--space-1); }
-  .tl-roles { margin-top: var(--space-2); display: grid; gap: var(--space-1); }
-  .tl-roles li { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-1) var(--space-4); }
-  .tl-role-period { font-size: var(--fs-small); color: var(--muted); }
-  .tl-bullets { margin-top: var(--space-4); display: grid; gap: var(--space-2); color: var(--muted); max-width: 68ch; }
-  .tl-bullets li { position: relative; padding-left: var(--space-5); }
-  .tl-bullets li::before { content: ""; position: absolute; left: 0; top: 0.8em; width: 12px; height: 1px; background: var(--border-control); }
-}
-
 /* Certifications, Contact, Footer (A12). */
 @layer components {
   .certs { border-top: 1px solid var(--hairline); }
@@ -321,8 +297,7 @@
   #play { background: linear-gradient(#0a1024, #09102a); }
   #services { background: linear-gradient(#09102a, #081021); }
   #stack { background: linear-gradient(#081021, #0d1931); }
-  #experience { background: linear-gradient(#0d1931, #1c1f52 60%, #2c2a66); }
-  #certifications { background: linear-gradient(#2c2a66, #5e4787 60%, #b9809e); }
+  #certifications { background: linear-gradient(#0d1931, #2c2a66 35%, #5e4787 70%, #b9809e); }
   #contact { background: linear-gradient(#b9809e, #d9957c 50%, #f0b47e); }
   .site-footer { background: linear-gradient(#f0b47e, #3a2440 30%, #1a1226); }
   [data-sky="live"] [data-stage]:not(#home), [data-sky="live"] .dusk { background: none; }
@@ -388,11 +363,6 @@
   #play .play-list:has(> li:only-child) { grid-template-columns: minmax(0, 46rem); }
 }
 @layer components {
-  /* Stats keep "Since 2018" on one line: full panel width below 1024px. */
-  .stat-value { white-space: nowrap; }
-  @media (min-width: 640px) and (max-width: 1023px) { .stats { max-width: none; } }
-}
-@layer components {
   /* Phones: the badge on its own row, so the certification name gets the full width (no one-word lines). */
   @media (max-width: 639px) {
     .cert-row { grid-template-columns: 24px minmax(0, 1fr); grid-template-areas: "index badge" "index main" "index verify"; align-items: start; row-gap: var(--space-3); }
@@ -405,7 +375,7 @@
 @layer components {
   /* Vertical rhythm (tokens.css): 96px between panels on desktop, 56px on phones; 112 / 68px where a new stage opens. */
   .section { padding-block: var(--section-pad); }
-  .section:is(#work, #about, #services, #experience, #contact) { padding-top: var(--stage-pad); }
+  .section:is(#work, #about, #services, #certifications, #contact) { padding-top: var(--stage-pad); }
   /* The sunrise bookend: contact and footer sit together, and the scene (rider on the ridge) closes the page. */
   .site-footer { padding-block: var(--section-pad) var(--space-8); }
   @media (min-width: 1024px) { .site-footer { padding-bottom: max(var(--space-9), 32svh); } }

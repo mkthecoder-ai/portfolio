@@ -1,6 +1,6 @@
 import { test, expect, revealAll } from "./fixtures";
 
-// Spec 5.3: the refinement round (About avatar, Services logos, certification badges, Play, Experience wording).
+// Spec 5.3: the refinement round (About avatar, Services logos, certification badges, Play).
 
 const box = (page: import("@playwright/test").Page, sel: string) => page.locator(sel).first().evaluate((el) => {
   const r = el.getBoundingClientRect();
@@ -72,13 +72,6 @@ test("Play: left-aligned like every other section, the single card wide (spec 5.
   if (!isMobile) expect(card.width).toBeGreaterThanOrEqual(600);
 });
 
-test("Experience: CNH reads in capability wording, with no internal migration", async ({ page }) => {
-  await page.goto("/");
-  const cnh = page.locator("#experience .tl-stop").filter({ hasText: "CNH Industrial" });
-  await expect(cnh.locator(".tl-bullets li")).toHaveCount(6);
-  await expect(cnh).not.toContainText(/from Azure DevOps to GitLab|move of|migrat/i);
-});
-
 test("every section header starts on the panel's content edge: icon, label and heading left-aligned (spec 5.4)", async ({ page }) => {
   await page.goto("/");
   const rows = await page.locator("main > section:not(#home)").evaluateAll((sections) => sections.map((s) => {
@@ -99,7 +92,7 @@ test("panels follow one vertical rhythm: 72-112px apart on desktop, 40-72px on p
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
   const gaps = await page.locator(".sky-panel").evaluateAll((els) => els.slice(1).map((el, i) => el.getBoundingClientRect().top - els[i].getBoundingClientRect().bottom));
-  expect(gaps).toHaveLength(8); // nine panels: eight sections and the footer
+  expect(gaps).toHaveLength(7); // eight panels: seven sections and the footer
   for (const g of gaps) {
     if (isMobile) { expect(g).toBeGreaterThanOrEqual(40); expect(g).toBeLessThanOrEqual(72); }
     else { expect(g).toBeGreaterThanOrEqual(72); expect(g).toBeLessThanOrEqual(112); }

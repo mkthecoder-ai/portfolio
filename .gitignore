@@ -51,6 +51,8 @@ review/
 *[Rr]esume*.pdf
 # ...except the one public copy served at /Manoj_Kumar_M_Resume.pdf
 !site/public/Manoj_Kumar_M_Resume.pdf
+# ...and the generic application résumé built from resume/resume.html (no phone or address)
+!resume/Manoj_Kumar_Resume.pdf
 
 # Loose images in the repo root (personal photos, drafts) are never committed
 /*.png

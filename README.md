@@ -6,6 +6,7 @@ engineer working on Azure.
 - **Site** (`site/`): Next.js static export with a painted, parallax hero and a living background
   canvas. No runtime server: the output in `site/out` is served by Azure Static Web Apps.
 - **Infrastructure** (`infra/`): Terraform for the Static Web App, DNS and budgets. See `infra/README.md`.
+- **Résumé** (`resume/`): `resume.html` is the source of `Manoj_Kumar_Resume.pdf` (A4, `npm run resume`).
 - **Pipelines** (`.github/workflows/`): `ci.yml` (lint, types, unit and browser tests, Terraform tests) and
   `deploy.yml`.
 

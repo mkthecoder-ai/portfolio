@@ -1,6 +1,6 @@
 import brand from "./brand.json";
 import type {
-  Capability, Certification, ContactContent, NavItem, Profile, SectionMeta, SeoContent, Stat, StackGroup, TimelineStop, WorkItem,
+  Capability, Certification, ContactContent, NavItem, Profile, SectionMeta, SeoContent, StackGroup, WorkItem,
 } from "./types";
 
 /** Flip to true only after Manoj confirms in writing that the public AURA was built independently
@@ -33,7 +33,7 @@ export const NAV: NavItem[] = [
 ];
 
 /** Every home section, in page order. */
-export const SECTION_ORDER = ["work", "about", "play", "services", "stack", "experience", "certifications", "contact"] as const;
+export const SECTION_ORDER = ["work", "about", "play", "services", "stack", "certifications", "contact"] as const;
 
 export const OBSERVED_SECTION_IDS = ["home", ...SECTION_ORDER];
 
@@ -43,9 +43,8 @@ export const SECTIONS: Record<string, SectionMeta> = {
   play: { id: "play", icon: "sparkle", stage: 3, index: "03", label: "Play", title: "Side projects and experiments" },
   services: { id: "services", icon: "cluster", stage: 4, index: "04", label: "Services", title: "What I do" },
   stack: { id: "stack", icon: "modules", stage: 4, index: "05", label: "Stack", title: "Tech stack", lead: "Grouped by area and ordered by depth." },
-  experience: { id: "experience", icon: "briefcase", stage: 5, index: "06", label: "Experience", title: "Experience" },
-  certifications: { id: "certifications", icon: "award", stage: 5, index: "07", label: "Certifications", title: "Certifications" },
-  contact: { id: "contact", icon: "mail", stage: 6, index: "08", label: "Contact", title: "Let's talk" },
+  certifications: { id: "certifications", icon: "award", stage: 5, index: "06", label: "Certifications", title: "Certifications" },
+  contact: { id: "contact", icon: "mail", stage: 6, index: "07", label: "Contact", title: "Let's talk" },
 };
 
 /** Spec 5.0 section 7. AURA, the homelab and tools join once Manoj supplies them (AURA only when clean-room). */
@@ -150,33 +149,6 @@ export const STACK_GROUPS: StackGroup[] = [
 /** Work stack terms that are deliberately not tools in the stack grid. */
 export const NON_STACK_TERMS = ["Remote state", "OpenAPI", "Azure Cost Management API"];
 
-export const TIMELINE: TimelineStop[] = [
-  { id: "education", kind: "education", period: "2014 – 2018", heading: "B.E., Electronics & Communication", org: "Don Bosco Institute of Technology, Bengaluru", bullets: [] },
-  { id: "cubespace", kind: "work", period: "Feb 2018 – Sep 2019", heading: "DevOps Engineer", org: "Cubespace Technologies", bullets: [
-    "Managed Azure virtual machines, networking and storage for client and internal projects.",
-    "Introduced CI/CD automation and containerised legacy applications.",
-  ] },
-  { id: "unified-softech", kind: "work", period: "Jan 2020 – Oct 2022", heading: "DevOps Engineer", org: "Unified Softech", bullets: [
-    "Built and ran Kubernetes platforms on Azure for production client workloads.",
-    "Moved legacy deployments onto containers and Terraform-managed infrastructure.",
-    "Delivered CI/CD pipelines and monitoring with Prometheus, Grafana and ELK.",
-  ] },
-  { id: "cnh", kind: "work", period: "Feb 2023 – Present", heading: "DevOps & Platform Engineering", org: "CNH Industrial",
-    roles: [
-      { title: "Software Engineer II, DevOps & Platform Engineering", period: "May 2025 – Present" },
-      { title: "Software Engineer I, DevOps Engineering", period: "Feb 2023 – Apr 2025" },
-    ],
-    bullets: [
-      // Spec 5.3: the public résumé's capability wording; no internal projects, migrations, incidents or metrics.
-      "Build and operate production AKS clusters: provisioning, upgrades, node pools, autoscaling, isolation and hardening.",
-      "Develop reusable Terraform modules for Azure using Azure Verified Modules (AVM), with a multi-state layout that separates networking, clusters and shared services.",
-      "Design CI/CD pipelines in Azure DevOps and GitLab CI with reusable templates and enforced security gates for code, dependency and container image scanning.",
-      "Manage Azure API Management (APIM): policies, backends, API lifecycle and automated OpenAPI publishing through pipelines.",
-      "Implement private networking with VNets, peering, private endpoints and private DNS for platform services.",
-      "Run observability with Azure Monitor, Prometheus, Grafana and Datadog.",
-    ] },
-];
-
 export const ALL_WORK: WorkItem[] = [
   { id: "terraform", index: "01", kicker: "Reference pattern", diagram: "terraform",
     title: "Modular, multi-state Terraform for Azure",
@@ -255,11 +227,6 @@ export const CERTIFICATIONS: Certification[] = [
 ];
 
 export const IN_PROGRESS = "Certified Kubernetes Administrator (CKA)";
-
-export const STATS: Stat[] = [
-  { prefix: "Since", value: "2018", caption: "Building on Azure" },
-  { value: String(CERTIFICATIONS.length), caption: "Certifications" },
-];
 
 export const CONTACT: ContactContent = {
   heading: "Let's talk",
