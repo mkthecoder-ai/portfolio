@@ -36,7 +36,7 @@ test("has a skip link to the main content", async ({ page }) => {
 test("shows section labels in the agreed format", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator("#work .section-head .label")).toHaveText("01 / Work");
-  await expect(page.locator("#contact .section-head .label")).toHaveText("08 / Contact");
+  await expect(page.locator("#contact .section-head .label")).toHaveText("07 / Contact");
 });
 
 test("only Geist Sans is preloaded; Geist Mono (labels and tags) still loads and applies", async ({ page }) => {

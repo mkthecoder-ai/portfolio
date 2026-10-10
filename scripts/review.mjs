@@ -16,7 +16,7 @@ const VIEWPORTS = [
   { name: "2560", width: 2560, height: 1440, deviceScaleFactor: 1 },
   { name: "1440-reduced-motion", width: 1440, height: 900, deviceScaleFactor: 1, reducedMotion: "reduce" },
 ];
-const SECTIONS = ["home", "work", "about", "services", "stack", "experience", "certifications", "contact"];
+const SECTIONS = ["home", "work", "about", "services", "stack", "certifications", "contact"];
 const overflowOf = (page) => page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
 
 const server = await createStaticServer("site/out");

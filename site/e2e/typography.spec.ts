@@ -39,7 +39,7 @@ test("each section has a label row (icon, then number and name) above a 32-48px 
       above: label.getBoundingClientRect().bottom <= h2.getBoundingClientRect().top + 1 || h2.classList.contains("sr-only"),
     };
   }));
-  expect(rows).toHaveLength(8);
+  expect(rows).toHaveLength(7);
   for (const r of rows) {
     // Spec 5.4: section icons are 22px on desktop, 20px on phones, square, centred on the label text.
     expect(r.iconSize, r.id).toBe(isMobile ? 20 : 22);

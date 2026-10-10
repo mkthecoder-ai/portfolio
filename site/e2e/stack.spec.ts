@@ -82,6 +82,6 @@ test("chip icons share one 16px slot, centred on the label, with a visible (not 
 test("section label icons are distinct, one per section", async ({ page }) => {
   await page.goto("/");
   const icons = await page.locator(".section-label svg").evaluateAll((els) => els.map((e) => e.innerHTML));
-  expect(icons.length).toBeGreaterThanOrEqual(8);
+  expect(icons.length).toBeGreaterThanOrEqual(7);
   expect(new Set(icons).size).toBe(icons.length);
 });
